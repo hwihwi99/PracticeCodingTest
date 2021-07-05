@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public class _2 {
+public class _2 {
+//    public static String[] solution(Stirng s){
+//
+//    }
 }
