@@ -41,4 +41,8 @@ public class Dequeue<T> implements DQ<T>{
     public T peekLast() {
         return array.get(array.size()-1);
     }
+
+    public boolean isEmpty(){
+        return array.isEmpty();
+    }
 }
