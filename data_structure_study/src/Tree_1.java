@@ -1,4 +1,4 @@
-public class Tree_3 {
+public class Tree_1 {
     public static void main(String[] args) {
         MyTree tree = new MyTree();
 
