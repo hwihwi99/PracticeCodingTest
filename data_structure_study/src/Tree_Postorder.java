@@ -3,8 +3,11 @@ public class Tree_Postorder {
         if(node != null){
             System.out.println(node.element());
             if(node.children()!=null){
-                for(MyTreeNode child : node.children())
+                System.out.print("   ");
+                for(MyTreeNode child : node.children()) {
+                    System.out.print("   ");
                     preOrder(child);
+                }
             }
         }
     }
