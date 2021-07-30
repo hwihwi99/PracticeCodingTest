@@ -54,8 +54,25 @@ public class MyTree {
         return newNode;
     }
 
+    // 루트 노드에 자식 노드로 추가하기
+    public MyTreeNode addNode(Object e, int size){
+        MyTreeNode newNode = new MyTreeNode(e,size);
+        newNode.setChildren(new ArrayList());
+        root.children().add(newNode);
+        Totalsize++;
+        return newNode;
+    }
+
     public MyTreeNode addChild(MyTreeNode v, Object e){
         MyTreeNode newNode = new MyTreeNode(e);
+        newNode.setChildren(new ArrayList());
+        v.children().add(newNode);
+        Totalsize++;
+        return newNode;
+    }
+
+    public MyTreeNode addChild(MyTreeNode v, Object e, int size){
+        MyTreeNode newNode = new MyTreeNode(e,size);
         newNode.setChildren(new ArrayList());
         v.children().add(newNode);
         Totalsize++;
