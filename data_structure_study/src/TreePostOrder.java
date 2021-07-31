@@ -21,10 +21,8 @@ public class TreePostOrder {
         MyTreeNode hw = tree.addNode("homeworks/");
         MyTreeNode program = tree.addNode("programs/");
         MyTreeNode todo = tree.addNode("todo.txt",1);
-
         MyTreeNode h1c = tree.addChild(hw,"h1c.doc",3);
         MyTreeNode h1nc = tree.addChild(hw,"h1nc.doc",2);
-
         MyTreeNode ddr = tree.addChild(program,"DDR.java",10);
         MyTreeNode stock = tree.addChild(program,"Stocks.java",25);
         MyTreeNode robot = tree.addChild(program,"Robot.java",20);
