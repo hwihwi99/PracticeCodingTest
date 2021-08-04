@@ -13,6 +13,10 @@ public class MyNode {
         this.children = new ArrayList();
     }
 
+    public MyNode(){
+
+    }
+
     public MyNode getParent() {
         return parent;
     }
