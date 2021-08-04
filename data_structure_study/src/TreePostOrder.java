@@ -14,7 +14,7 @@ public class TreePostOrder {
     }
 
     public static void main(String[] args) {
-        MyTree tree = new MyTree();
+        MyTrees tree = new MyTrees();
 
         MyTreeNode root = tree.addRoot("cs16/");
 

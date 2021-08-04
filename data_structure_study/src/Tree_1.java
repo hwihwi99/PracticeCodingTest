@@ -1,6 +1,6 @@
 public class Tree_1 {
     public static void main(String[] args) {
-        MyTree tree = new MyTree();
+        MyTrees tree = new MyTrees();
 
         MyTreeNode root = tree.addRoot("Computers'R Us");
 

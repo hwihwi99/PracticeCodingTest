@@ -14,7 +14,7 @@ public class TreePreorder {
     }
 
     public static void main(String[] args) {
-        MyTree root = new MyTree();
+        MyTrees root = new MyTrees();
 
         MyTreeNode MMF = root.addRoot("Make Money Fast!");
 

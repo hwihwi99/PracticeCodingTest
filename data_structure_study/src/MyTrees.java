@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 
-public class MyTree {
+public class MyTrees {
     private MyTreeNode root;
     private int Totalsize;
 
-    MyTree(){
+    MyTrees(){
         root = null;
         Totalsize = 0;
     }
-    MyTree(Object e){
+    MyTrees(Object e){
         root = new MyTreeNode(e);
         root.setChildren(new ArrayList());
         Totalsize = 1;
