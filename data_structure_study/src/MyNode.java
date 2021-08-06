@@ -17,6 +17,10 @@ public class MyNode {
 
     }
 
+    public MyNode(Object e){
+        this.element = e;
+    }
+
     public MyNode getParent() {
         return parent;
     }

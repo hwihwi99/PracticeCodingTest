@@ -1,10 +1,6 @@
 import java.util.ArrayList;
 
 public class MyBinNode extends MyNode{
-    private MyNode parent;
-    private ArrayList children;
-    private int cost;
-    private Object element;
 
     public MyBinNode(){
         super();
@@ -14,19 +10,22 @@ public class MyBinNode extends MyNode{
         super(parent,cost,element);
     }
 
+    public MyBinNode(Object e){
+        super(e);
+    }
     public MyBinNode left(){
-        return (MyBinNode) getChildren().get(0);
+        return (MyBinNode) super.getChildren().get(0);
     }
 
     public MyBinNode right(){
-        return (MyBinNode) getChildren().get(1);
+        return (MyBinNode) super.getChildren().get(1);
     }
 
     public void setLeft(MyBinNode v){
-        getChildren().set(0,v);
+        super.getChildren().set(0,v);
     }
 
     public void setRight(MyBinNode v){
-        getChildren().set(1,v);
+        super.getChildren().set(1,v);
     }
 }
