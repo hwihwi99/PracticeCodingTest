@@ -1,31 +1,26 @@
-import java.util.ArrayList;
-
-public class MyBinNode extends MyNode{
-
-    public MyBinNode(){
+public class MyBinNode extends MyNode {
+    MyBinNode(){
         super();
     }
 
-    public MyBinNode(MyNode parent, int cost, Object element){
-        super(parent,cost,element);
-    }
-
-    public MyBinNode(Object e){
+    MyBinNode(Object e){
         super(e);
     }
+
+    // 왼쪽 자식 : 0, 오른쪽 자식 : 1
+
     public MyBinNode left(){
-        return (MyBinNode) super.getChildren().get(0);
+        return (MyBinNode) super.children().get(0);
     }
 
     public MyBinNode right(){
-        return (MyBinNode) super.getChildren().get(1);
+        return (MyBinNode) super.children().get(1);
     }
 
-    public void setLeft(MyBinNode v){
-        super.getChildren().set(0,v);
+    public void setLeft (MyBinNode v){
+        super.children().set(0,v);
     }
-
-    public void setRight(MyBinNode v){
-        super.getChildren().set(1,v);
+    public void setRight (MyBinNode v){
+        super.children().set(1,v);
     }
 }
