@@ -84,10 +84,77 @@ public class MyBinTree extends MyTree{
         return root;
     }
 
-    // 루트에
+    // 루트에 자식 넣기
     public MyBinNode addNode(Object e){
         MyBinNode newNode = null;
 
+        // 이미 자식이 모두 있을 때
+        if (hasLeft((MyBinNode) super.root()) && hasRight((MyBinNode) super.root())) {
+            System.out.println("모든 자식이 차있습니다.");
+        }
+
+        // 왼쪽 자식만 있을 때
+        else if (hasLeft((MyBinNode) super.root())){
+            System.out.println("오른쪽에 자식을 넣겠습니다");
+            super.removeChild(super.root(),1);
+
+            newNode = (MyBinNode) super.addNode(e);
+            newNode.children().add(null);
+            newNode.children().add(null);
+        }
+
+        // 오른쪽 자식만 있을 때
+        else if (hasRight((MyBinNode) super.root())){
+            System.out.println("오른쪽에 자식을 넣겠습니다");
+
+            // 오른쪽에 있던 것 임시 옮기기
+            MyBinNode temp = (MyBinNode) super.removeChild(super.root(),1);
+            super.removeChild(super.root(),0);
+
+            newNode = (MyBinNode) super.addNode(e);
+            newNode.children().add(null);
+            newNode.children().add(null);
+
+            MyBinNode reNode = (MyBinNode) super.addNode(temp);
+            reNode.children().add(null);
+            reNode.children().add(null);
+        }
+
         return newNode;
     }
+
+    public MyBinNode insertLeft(MyBinNode v, Object e){
+        MyBinNode newNode = null;
+
+        if(!hasLeft(v)){
+            newNode = (MyBinNode) super.setChild(v,0,e);
+            newNode.children().add(null);
+            newNode.children().add(null);
+        }
+        return newNode;
+    }
+
+    public MyBinNode insertRight(MyBinNode v, Object e){
+        MyBinNode newNode = null;
+
+        if(!hasRight(v)){
+            newNode = (MyBinNode) super.setChild(v,1,e);
+            newNode.children().add(null);
+            newNode.children().add(null);
+        }
+        return newNode;
+    }
+
+    public Object replace (MyBinNode v, Object e){
+        Object temp = v.element();
+        v.setElement(e);
+        // 대체되고 없어질 아이 리턴하기
+        return temp;
+    }
+
+//    public MyBinNode remove(MyBinNode v) throws TwoChildrenException{
+//        if(hasRight(v) && hasLeft(v)){
+//            throw  new TwoChildrenException("TwoChildrenException");
+//        }
+//    }
 }
