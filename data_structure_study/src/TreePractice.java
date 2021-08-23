@@ -7,12 +7,13 @@ public class TreePractice {
         mbt.insertLeft(mbt.root().left(),"2");
         mbt.insertRight(mbt.root().left(),"-");
         mbt.insertLeft(mbt.root().left().right(),"3");
-        mbt.insertRight(mbt.root().left().right(),"2");
+        mbt.insertRight(mbt.root().left().right(),"1");
         mbt.insertLeft(mbt.root().right(),"3");
         mbt.insertRight(mbt.root().right(),"2");
 
         mbt.inOrder(mbt.root());
-        System.out.print(" = ");
+        System.out.println();
+        System.out.print("= ");
         System.out.println(mbt.PostOrder(mbt.root()));
     }
 }

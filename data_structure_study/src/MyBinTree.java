@@ -35,7 +35,7 @@ public class MyBinTree extends MyTree{
     }
 
     public Boolean isRoot(MyBinNode v){
-        return super.root() == v;
+        return v.parent() == null;
     }
 
     public MyBinNode root(){
@@ -55,11 +55,11 @@ public class MyBinTree extends MyTree{
     }
 
     public boolean hasLeft(MyBinNode v){
-        return left(v) == null;
+        return v.children().get(0)!=null;
     }
 
     public boolean hasRight(MyBinNode v){
-        return right(v) == null;
+        return v.children().get(1)!=null;
     }
 
     // 자식이 없으면 참, 있으면 거짓
@@ -90,7 +90,7 @@ public class MyBinTree extends MyTree{
 
         // 이미 자식이 모두 있을 때
         if (hasLeft((MyBinNode) super.root()) && hasRight((MyBinNode) super.root())) {
-            System.out.println("모든 자식이 차있습니다.");
+            System.out.println("모든 루트 자식이 차있습니다.");
         }
 
         // 왼쪽 자식만 있을 때
@@ -118,6 +118,17 @@ public class MyBinTree extends MyTree{
             MyBinNode reNode = (MyBinNode) super.addNode(temp);
             reNode.children().add(null);
             reNode.children().add(null);
+        }else{
+            System.out.println("No children");
+            super.removeChild(super.root(),0);
+            super.removeChild(super.root(),0);
+
+            newNode = (MyBinNode) super.addNode(e);
+            newNode.children().add(null);
+            newNode.children().add(null);
+
+
+            super.root().children().add(null);
         }
 
         return newNode;
@@ -217,6 +228,9 @@ public class MyBinTree extends MyTree{
     }
 
     public int PostOrder(MyBinNode v) {
+
+        int value = 0;
+
         if (this.isExternal(v)) {
             return Integer.parseInt(v.element().toString());
         }
@@ -224,7 +238,6 @@ public class MyBinTree extends MyTree{
             int x = PostOrder(v.left());
             int y = PostOrder(v.right());
 
-            int value = 0;
 
             switch (v.element().toString()){
                 case "+":
