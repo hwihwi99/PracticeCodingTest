@@ -17,9 +17,12 @@ public class BJ2156 {
         if(N >= 2)
             dp[2] = juice[1]+juice[2];
 
-        for(int i = 3; i<N;i++){
+        for(int i = 3; i<=N;i++){
             dp[i] = Math.max(dp[i-2]+juice[i] , dp[i-3]+juice[i-1]+juice[i]);
             dp[i] = Math.max(dp[i-1],dp[i]);
         }
+
+        System.out.println(Math.max(dp[N-1],dp[N]));
+
     }
 }
