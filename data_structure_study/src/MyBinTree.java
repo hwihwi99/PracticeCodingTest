@@ -152,9 +152,98 @@ public class MyBinTree extends MyTree{
         return temp;
     }
 
-//    public MyBinNode remove(MyBinNode v) throws TwoChildrenException{
-//        if(hasRight(v) && hasLeft(v)){
-//            throw  new TwoChildrenException("TwoChildrenException");
-//        }
-//    }
+    public MyBinNode remove(MyBinNode v) throws TwoChildrenException{
+
+        // 지우려고 하는 것의 노드의 부모를 찾아서
+        MyBinNode parent = (MyBinNode) v.parent();
+
+        int idx = 0;
+        // 지울 애가 부모의 왼쪽 노드였다면 0, 오른쪽 노드였다면 1을 저장한다.
+        if(this.left(parent) == v){
+            idx = 0;
+        }else{
+            idx = 1;
+        }
+
+        // 자식이 모두 있을 때
+        if(hasRight(v) && hasLeft(v)){
+            throw  new TwoChildrenException("TwoChildrenException");
+        }
+        // 왼쪽에만 자식이 있을 때
+        else if(this.hasLeft(v)){
+            MyBinNode children = (MyBinNode) v.children().get(0);
+            parent.children().set(idx,children);
+            children.setParent(parent);
+        }else if(this.hasRight(v)){
+            MyBinNode children = (MyBinNode) v.children().get(1);
+            parent.children().set(idx,children);
+            children.setParent(parent);
+        }
+        // 자식이 모두 없을 때
+        else{
+            // 원래 부모의 자식에서 그 노드를 빼주면 됩니다.
+            parent.children().set(idx,null);
+        }
+        return v;
+    }
+    public void attach(MyBinNode v, MyBinNode t1, MyBinNode t2) throws NotExternalException{
+        if(this.isExternal(v)){
+            this.insertLeft(v,t1.element());
+            this.insertRight(v,t2.element());
+        }else {
+            throw new NotExternalException("We can't attach that Node");
+        }
+    }
+
+    public void preOrder(MyBinNode v){
+        System.out.println(v.element()+" ");
+
+        if(this.hasLeft(v))
+            preOrder(this.left(v));
+        if(this.hasRight(v))
+            preOrder(this.right(v));
+    }
+
+    public void inOrder(MyBinNode v){
+        if(hasLeft(v)){
+            System.out.print("(");
+            inOrder(this.left(v));
+        }
+        System.out.print(v.element());
+        if(hasRight(v)){
+            inOrder(this.right(v));
+            System.out.print(")");
+        }
+    }
+
+    public int PostOrder(MyBinNode v) {
+        if (this.isExternal(v)) {
+            return Integer.parseInt(v.element().toString());
+        }
+        else{
+            int x = PostOrder(v.left());
+            int y = PostOrder(v.right());
+
+            int value = 0;
+
+            switch (v.element().toString()){
+                case "+":
+                    value = x+y;
+                    break;
+
+                case "X":
+                    value = x*y;
+                    break;
+
+                case "*":
+                    value = x*y;
+                    break;
+
+                case "-":
+                    value = x-y;
+                    break;
+            }
+            return value;
+        }
+    }
 }
