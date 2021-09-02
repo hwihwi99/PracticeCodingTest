@@ -8,19 +8,18 @@ public class BJ11279 {
     private static ArrayList<Integer> heapArray = null;
 
     private static void insert(int data){
-        // 힙이 비었거나 만들어져있지 않을때는?
-
-            heapArray.add(data);
-            int index = heapArray.size()-1;
-            while(index>1){
-                if(heapArray.get(index)>heapArray.get(index/2)){
-                    Collections.swap(heapArray,index,index/2);
-                    index = index / 2;
-                }else{
-                    break;
+        heapArray.add(data);
+        int index = heapArray.size()-1;
+        while(index>1){
+            if(heapArray.get(index)>heapArray.get(index/2)){
+                Collections.swap(heapArray,index,index/2);
+                index = index / 2;
                 }
+            else{
+                break;
             }
         }
+    }
 
 
     private static int pop(){
