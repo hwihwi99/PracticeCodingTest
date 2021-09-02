@@ -4,127 +4,81 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class BJ1927 {
-    private static ArrayList<Integer> min_heap = null;
+public class BJ1927{
+    private static ArrayList<Integer> heaparray = null;
 
-    public static boolean moved_up(int index){
-        if(index <= 1)
-            return false;
-        int parent_idx = index / 2;
-        if(min_heap.get(parent_idx) > min_heap.get(index))
-            return true;
-        return false;
-    }
-
-    public static void insert(int num){
-        // 첫번째 삽입이면 1번째 인덱스부터 값을 넣어야하기 때문에
-        if(min_heap == null){
-            min_heap = new ArrayList<>();
-            min_heap.add(0);
-            min_heap.add(num);
-        }else{
-            // 현재 넣은 곳은 인덱스와 그 부모 인덱스
-            int insert_idx, parent_idx;
-            min_heap.add(num);
-            insert_idx = min_heap.size()-1;
-            while(moved_up(insert_idx)){
-                parent_idx = insert_idx / 2;
-                Collections.swap(min_heap, parent_idx, insert_idx);
-                insert_idx = parent_idx;
-            }
+    public static void insert (int M){
+        heaparray.add(M);
+        int index = heaparray.size()-1;
+        while (index > 1){
+            if(heaparray.get(index)<heaparray.get(index/2)){
+                Collections.swap(heaparray,index,index/2);
+                index = index/2;
+            }else
+                break;
         }
     }
 
-    public static boolean moved_down(int index){
-        int left_child_pop_index,right_child_pop_index;
-        left_child_pop_index = index* 2;
-        right_child_pop_index = index * 2 + 1;
-
-        // case 1 : 왼쪽 자식 노드가 없을 때 == 자식 노드가 없을 때
-        if(left_child_pop_index >= min_heap.size())
-            return false;
-        // case 2 : 오른쪽 자식 노드만 없을 때 == 왼쪽 자식만 있을 때
-        else if (right_child_pop_index>=min_heap.size()){
-            if(min_heap.get(index)>min_heap.get(left_child_pop_index))
-                return true;
-            else
-                return false;
-        }
-        // csae 3 : 자식이 두개 다 있을 때
+    public static int pop(){
+        if(heaparray==null)
+            return -1;
+        else if (heaparray.size()==2)
+            return heaparray.remove(1);
         else {
-            // 왼쪽 자식이 더 클 때
-            if(min_heap.get(left_child_pop_index)> min_heap.get(right_child_pop_index)){
-                // 그럼 오른쪽과 부모를 비교해
-                if(min_heap.get(index) > min_heap.get(right_child_pop_index)){
-                    // 오른쪽이 더 작으면 이게 루트로 가야지!
-                    return true;
-                }
-                else
-                    return false;
-            }
-            // 오른쪽 자식이 더 클 때
-            else if(min_heap.get(left_child_pop_index)< min_heap.get(right_child_pop_index)){
-                // 그럼 왼쪽과 부모를 비교해
-                if(min_heap.get(index) > min_heap.get(left_child_pop_index)){
-                    // 왼쪽이 더 작으면 이게 루트로 가야지!
-                    return true;
-                }
-                else
-                    return false;
-            }
-        }
-        return false;
-    }
+            int returnData = heaparray.get(1);
+            heaparray.set(1, heaparray.remove(heaparray.size()-1));
+            int index = 1;
+            int leftIndex = 0, rightIndex = 0;
+            while (index<heaparray.size()){
+                leftIndex = index * 2;
+                rightIndex = index * 2 + 1;
 
-    public static int popMin(){
-        if(min_heap == null || min_heap.size() == 1){
-            return 0;
-        }
-        int returnData = min_heap.get(1);
-        min_heap.set(1,min_heap.get(min_heap.size()-1));
-        min_heap.remove(min_heap.size()-1);
-        int pop_idx = 1;
-        int left_child_pop_idx, right_child_pop_idx;
-        while(moved_down(pop_idx)){
-            left_child_pop_idx = pop_idx * 2;
-            right_child_pop_idx = pop_idx * 2 + 1;
-
-            // 왼쪽 자식은 있고 오른쪽 자식은 없을 때
-            if(right_child_pop_idx>=min_heap.size()){
-                if(min_heap.get(left_child_pop_idx) < min_heap.get(pop_idx)){
-                    Collections.swap(min_heap,left_child_pop_idx,pop_idx);
-                    pop_idx = left_child_pop_idx;
-                }else {
-                    if(min_heap.get(left_child_pop_idx) > min_heap.get(right_child_pop_idx)){
-                        if(min_heap.get(pop_idx) > min_heap.get(right_child_pop_idx)){
-                            Collections.swap(min_heap,pop_idx, right_child_pop_idx);
-                            pop_idx = right_child_pop_idx;
-                        }
-                    }
-                    else if (min_heap.get(left_child_pop_idx) < min_heap.get(right_child_pop_idx)){
-                        if(min_heap.get(pop_idx) < min_heap.get(left_child_pop_idx)){
-                            Collections.swap(min_heap,pop_idx,left_child_pop_idx);
-                            pop_idx = left_child_pop_idx;
-                        }
+                if(leftIndex >= heaparray.size()){
+                    break;
+                }else if (rightIndex >= heaparray.size()){
+                    if(heaparray.get(leftIndex)<heaparray.get(index)){
+                        Collections.swap(heaparray,leftIndex,index);
+                        index = leftIndex;
+                    }else
+                        break;
+                }else{
+                    if(heaparray.get(leftIndex)<heaparray.get(rightIndex)){
+                        if(heaparray.get(leftIndex)<heaparray.get(index)){
+                            Collections.swap(heaparray,leftIndex,index);
+                            index = leftIndex;
+                        }else
+                            break;
+                    }else{
+                        if(heaparray.get(rightIndex)<heaparray.get(index)){
+                            Collections.swap(heaparray,rightIndex,index);
+                            index = rightIndex;
+                        }else
+                            break;
                     }
                 }
             }
-
+                return returnData;
         }
-        return returnData;
     }
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder builder = new StringBuilder();
-        int num = Integer.parseInt(br.readLine());
-        for(int i = 0;i<num;i++){
-            int input = Integer.parseInt(br.readLine());
-            if(input == 0){
-                builder.append(popMin()).append('\n');
-            }else{
-                insert(input);
+        int N = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        heaparray = new ArrayList<>();
+        heaparray.add(null);
+
+        for(int i = 0;i<N;i++){
+            int M = Integer.parseInt(br.readLine());
+            if(M==0){
+                if(heaparray.size()<=1){
+                    sb.append(0).append('\n');
+                }else {
+                    sb.append(pop()).append('\n');
+                }
+            }else {
+                insert(M);
             }
         }
-        System.out.println(builder.toString());
+        System.out.println(sb);
     }
 }
