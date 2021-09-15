@@ -6,8 +6,8 @@ import java.util.*;
 public class BJ1260 {
 
     public static Queue<Integer> bfs(HashMap<Integer,ArrayList<Integer>> graph, int start){
-        Queue<Integer> visited = new LinkedList<>();
-        Queue<Integer> needVisit = new LinkedList<>();
+        Queue<Integer> visited = new LinkedList<Integer>();
+        Queue<Integer> needVisit = new LinkedList<Integer>();
 
         needVisit.offer(start);
 

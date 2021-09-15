@@ -1,4 +1,4 @@
-public class Queue {
+public class Queue<I extends Number> {
     private Object [] arr;
     private int head;
     private int tail;
