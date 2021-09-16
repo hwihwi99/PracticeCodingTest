@@ -4,6 +4,7 @@ public class MyHashTable {
     private ArrayList bucketArray;
     private int bucketCapacity;
     private int totalCnt;
+    private float loadFactor;
 
     public MyHashTable(int initialCapacity){
         bucketArray = new ArrayList();
@@ -13,6 +14,17 @@ public class MyHashTable {
             bucketArray.add(null);
         }
     }
+
+    public MyHashTable(int initialCapacity, float loadFactor){
+        bucketArray = new ArrayList();
+        bucketCapacity = initialCapacity;
+        totalCnt = 0;
+        this.loadFactor = loadFactor;
+        for(int i = 0; i<bucketCapacity;i++){
+            bucketArray.add(null);
+        }
+    }
+
 
     private int hashFunc(String k){
         int h = 0;
@@ -25,6 +37,32 @@ public class MyHashTable {
         return h;
     }
 
+    // loadFactor가 커져서 capacity를 늘렸다면.. -> 배열의 크기를 늘리고 재배치 해주어야합니다.
+    private void rehash(int capacity){
+        ArrayList oldList = this.bucketArray;
+
+        // bucketArray 다시 설정
+        this.bucketCapacity = capacity;
+        this.bucketArray = new ArrayList();
+        for(int i=0;i<bucketCapacity;i++){
+            bucketArray.add(null);
+        }
+        this.totalCnt = 0;
+
+        for(int i = 0; i<oldList.size();i++){
+            ArrayList temp = (ArrayList) oldList.get(i);
+            if(temp != null){
+                for(int j = 0; j< temp.size();j++){
+                    StudentInfo tempInfo = (StudentInfo) temp.get(j);
+                    this.put(tempInfo.getStudentID(),tempInfo.getStudentName());
+                }
+            }
+        }
+    }
+
+    public float getLoadFactor(){
+        return (float) this.totalCnt/this.bucketCapacity;
+    }
     public int size(){
         return this.totalCnt;
     }
@@ -46,6 +84,11 @@ public class MyHashTable {
     }
 
     public String put (String k, String v) {
+
+        if(this.getLoadFactor() > this.loadFactor){
+            rehash(2*bucketCapacity);
+        }
+
         StudentInfo studentInfo = new StudentInfo(k, v);
         int key = hashFunc(k);
         ArrayList temp = (ArrayList) bucketArray.get(key);
@@ -90,15 +133,37 @@ public class MyHashTable {
         return null;
     }
 
+//    public void printHashTable(){
+//        System.out.println("************HASH TABLE****************");
+//        System.out.println("Capacity : "+this.bucketCapacity + ", Size : "+this.totalCnt+", LoadFactor : " + this.loadFactor);
+//
+//
+//    }
     public static void main(String[] args) {
-        MyHashTable hashTable = new MyHashTable(13);
-        hashTable.put("123","A");
-        hashTable.put("34235","B");
-        hashTable.put("dfssdf","C");
-        hashTable.put("dsfs","D");
-        System.out.println(hashTable.get("123"));
-        System.out.println(hashTable.remove("123"));
-        System.out.println(hashTable.get("DSFS"));
-        System.out.println(hashTable.bucketArray);
+        MyHashTable mht = new MyHashTable(13,0.9F);
+
+        System.out.println("-----------------------------");
+        System.out.println(mht.put("201211032","HSK"));
+        System.out.println(mht.put("201211032","HSK2"));
+        System.out.println(mht.put("201211111","KDI"));
+        System.out.println(mht.put("201211115","KDP"));
+        System.out.println(mht.put("201711215","DDP"));
+        System.out.println(mht.put("201711515","GDP"));
+
+        System.out.println(mht.put("201911515","LID"));
+        System.out.println(mht.put("201911528","HID"));
+        System.out.println(mht.put("201911529","YID"));
+        System.out.println(mht.put("201911530","YKD"));
+        System.out.println(mht.put("201911560","YHD"));
+        System.out.println("CURRENT LOADFACTOR : "+mht.getLoadFactor());
+
+        System.out.println("-----------------------------");
+        System.out.println("get 201211032 : "+mht.get("201211032"));
+        System.out.println("get 201211111 : "+mht.get("201211111"));
+
+       // mht.printHashTable();
+
+
+
     }
 }
