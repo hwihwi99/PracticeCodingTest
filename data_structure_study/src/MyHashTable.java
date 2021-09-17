@@ -39,6 +39,7 @@ public class MyHashTable {
 
     // loadFactor가 커져서 capacity를 늘렸다면.. -> 배열의 크기를 늘리고 재배치 해주어야합니다.
     private void rehash(int capacity){
+        System.out.println("rehashing!!");
         ArrayList oldList = this.bucketArray;
 
         // bucketArray 다시 설정
@@ -133,16 +134,29 @@ public class MyHashTable {
         return null;
     }
 
-//    public void printHashTable(){
-//        System.out.println("************HASH TABLE****************");
-//        System.out.println("Capacity : "+this.bucketCapacity + ", Size : "+this.totalCnt+", LoadFactor : " + this.loadFactor);
-//
-//
-//    }
+    public void printHashTable(){
+        System.out.println("************HASH TABLE****************");
+        System.out.println("Capacity : "+this.bucketCapacity + ", Size : "+this.totalCnt+", LoadFactor : " + this.loadFactor);
+
+        for(int i = 0; i<this.bucketArray.size();i++) {
+            ArrayList tempList = (ArrayList) this.bucketArray.get(i);
+            if(tempList == null){
+                System.out.println("[0]");
+            }else{
+                System.out.print("[ "+tempList.size()+" ] -");
+                for(int j = 0; j< tempList.size();j++){
+                    StudentInfo info = (StudentInfo) tempList.get(j);
+                    System.out.print(info.getStudentName()+" ");
+                }
+                System.out.println();
+            }
+        }
+    }
+
     public static void main(String[] args) {
         MyHashTable mht = new MyHashTable(13,0.9F);
 
-        System.out.println("-----------------------------");
+        System.out.println("--------------------------------------");
         System.out.println(mht.put("201211032","HSK"));
         System.out.println(mht.put("201211032","HSK2"));
         System.out.println(mht.put("201211111","KDI"));
@@ -157,13 +171,26 @@ public class MyHashTable {
         System.out.println(mht.put("201911560","YHD"));
         System.out.println("CURRENT LOADFACTOR : "+mht.getLoadFactor());
 
-        System.out.println("-----------------------------");
+        System.out.println("--------------------------------------");
         System.out.println("get 201211032 : "+mht.get("201211032"));
         System.out.println("get 201211111 : "+mht.get("201211111"));
+        System.out.println();
+        mht.printHashTable();
 
-       // mht.printHashTable();
+        System.out.println("--------------------------------------");
+        System.out.println(mht.put("201912515","JID"));
+        System.out.println(mht.put("201211528","IJD"));
+        System.out.println(mht.put("201916529","YID"));
+        System.out.println(mht.put("201917530","QKD"));
+        System.out.println(mht.put("201211560","YHD"));
+        System.out.println("CURRENT LOADFACTOR : "+mht.getLoadFactor());
 
+        mht.printHashTable();
 
+        System.out.println("--------------------------------------");
+        System.out.println("remove 201211032"+mht.remove("201211032"));
+        System.out.println("remove 201211528"+mht.remove("201211528"));
 
+        mht.printHashTable();
     }
 }
