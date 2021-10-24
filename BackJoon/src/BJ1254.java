@@ -9,20 +9,21 @@ public class BJ1254 {
         String str = br.readLine();
 
         int length = str.length();
-        ArrayList<Character> ans = new ArrayList<>();
-        for(int i = 0; i<str.length();i++){
-            ans.add(str.charAt(i));
-        }
 
-        for(int i = 0; i<length;i++){
-            char c =ans.get(i);
-            char d = ans.get(ans.size()-i-1);
-            if(c != d){
-                ans.add(ans.size()-i,c);
-            }
+        for(int i = length/2;i<length;i++){
+
         }
-        System.out.println(ans.size());
 
 
     }
 }
+
+/**
+ * cdefewd
+ *
+ * cdefewdc
+ *
+ * cdefewedc
+ *
+ * cde   edc
+ * */
