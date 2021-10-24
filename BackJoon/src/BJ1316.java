@@ -7,16 +7,22 @@ public class BJ1316 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        int ans = 0;
+        int ans = N;
         for(int i =0 ; i<N;i++){
             String str = br.readLine();
             ArrayList<Character> alpha = new ArrayList<>();
-
-            alpha.add('c');
-            for(int j = 1; j<str.length();j++){
-
+            alpha.add(str.charAt(0));
+            for(int k = 1; k<str.length(); k++){
+                if(str.charAt(k-1) == str.charAt(k)){
+                    continue;
+                }
+                if(alpha.contains(str.charAt(k))){
+                    ans--;
+                    break;
+                }
+                alpha.add(str.charAt(k));
             }
-
         }
+        System.out.println(ans);
     }
 }
