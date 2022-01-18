@@ -1,9 +1,9 @@
-public class Queue<I extends Number> {
+public class MyQueue<I extends Number> {
     private Object [] arr;
     private int head;
     private int tail;
 
-    public Queue(int size){
+    public MyQueue(int size){
         arr = new Object[size];
         head = 0;
         tail = 0;
