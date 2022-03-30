@@ -4,52 +4,45 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
 /**
- * 188ms
+ * 192ms
  * */
 public class BJ10828 {
     public static void main(String[] args) throws IOException {
-
-        Stack <Integer> stack = new Stack<>();
-        StringBuilder sb = new StringBuilder();
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int num = Integer.parseInt(br.readLine());
-        StringTokenizer st = null;
+        int N = Integer.parseInt(br.readLine());
+        StringBuilder builder = new StringBuilder();
+        StringTokenizer st;
 
-        for(int i = 0;i<num;i++){
-            st = new StringTokenizer(br.readLine()," ");
+        Stack<Integer> stack = new Stack<>();
 
-            switch (st.nextToken()){
-                case "push":
-                    stack.push(Integer.parseInt(st.nextToken()));
-                    break;
+        for(int i = 0; i<N; i++) {
+            String cmd = br.readLine();
 
-                case "pop":
-                    if(stack.isEmpty())
-                        sb.append(-1).append('\n');
-                    else
-                        sb.append(stack.pop()).append('\n');
-                    break;
-
-                case "size":
-                    sb.append(stack.size()).append('\n');
-                    break;
-
-                case "empty":
-                    if(stack.isEmpty())
-                        sb.append(1).append('\n');
-                    else
-                        sb.append(0).append('\n');
-                    break;
-
-                case "top":
-                    if(stack.isEmpty())
-                        sb.append(-1).append('\n');
-                    else
-                        sb.append(stack.peek()).append('\n');
-                    break;
+            if(cmd.contains("push")) {
+                st = new StringTokenizer(cmd);
+                st.nextToken();
+                int X = Integer.parseInt(st.nextToken());
+                stack.push(X);
+            }else if(cmd.equals("pop")) {
+                if(stack.isEmpty())
+                    builder.append(-1).append("\n");
+                else
+                    builder.append(stack.pop()).append("\n");
+            } else if(cmd.equals("size")) {
+                builder.append(stack.size()).append("\n");
+            } else if(cmd.equals("empty")) {
+                if(stack.isEmpty())
+                    builder.append(1).append("\n");
+                else
+                    builder.append(0).append("\n");
+            } else if(cmd.equals("top")) {
+                if(stack.isEmpty())
+                    builder.append(-1).append("\n");
+                else
+                    builder.append(stack.peek()).append("\n");
             }
         }
-        System.out.println(sb.toString());
+        builder.deleteCharAt(builder.lastIndexOf("\n"));
+        System.out.println(builder);
     }
 }
