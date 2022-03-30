@@ -3,44 +3,42 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 /**
- * 140ms
+ * 128ms
  * */
 public class BJ9012 {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int num = Integer.parseInt(br.readLine());
+    private static Stack<Character> stack;
+    public static Boolean check(String str) {
+        char[] input = str.toCharArray();
 
-        while (num-- > 0){
-
-            Stack <Character> stack = new Stack<>();
-            String str =br.readLine();
-            boolean flag = true;
-
-            char [] input = str.toCharArray();
-            for(int j = 0;j<input.length;j++){
-
-                if(input[j] == '('){
-                    stack.push('(');
+        for(char c : input) {
+            if(c=='(')
+                stack.push(c);
+            else if(c==')') {
+                if(stack.isEmpty()) {
+                    return false;
                 }
-
-                else if(input[j]==')'){
-                    if(stack.isEmpty()){
-                        flag = false;
-                        break;
-                    }else{
-                        stack.pop();
-                    }
-                }
+                stack.pop();
             }
-
-            if(!stack.isEmpty()){
-                flag = false;
-            }
-
-            if(flag)
-                System.out.println("YES");
-            else
-                System.out.println("NO");
         }
+        if(!stack.isEmpty())
+            return false;
+        return true;
+
+    }
+
+    public static void main(String[] args) throws IOException{
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i<N; i++) {
+            stack = new Stack<>();
+            if(check(br.readLine()))
+                builder.append("YES").append("\n");
+            else
+                builder.append("NO").append("\n");
+        }
+        builder.deleteCharAt(builder.lastIndexOf("\n"));
+        System.out.println(builder);
     }
 }
