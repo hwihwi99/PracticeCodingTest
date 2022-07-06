@@ -1,5 +1,3 @@
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
