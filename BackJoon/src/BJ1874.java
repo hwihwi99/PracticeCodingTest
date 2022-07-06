@@ -1,64 +1,42 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class BJ1874 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        Queue<Integer> input = new LinkedList<>();
-
-        for(int i = 0; i<N; i++) {
-            input.offer(Integer.parseInt(br.readLine()));
-        }
+        ArrayList<Integer> stack = new ArrayList<>();
+        stack.add(0,0);
+        int top = 0; // 제일 꼭대기를 가리킴
+        int index = 1; // 다음으로 넣어야할 숫자
+        boolean flag = true;
         StringBuilder sb = new StringBuilder();
-        int A = input.peek();
-        Stack<Integer> stack = new Stack<>();
+        for(int i = 0; i<N; i++) {
+            int num = Integer.parseInt(br.readLine());
+            if(stack.get(top) > num) {
+                flag = false;
+                break;
+            }
+            while (stack.get(top) < num) {
+                stack.add(top+1,index);
+                top++;
+                index++;
+                sb.append("+").append("\n");
+            }
 
-        int i = 1;
-
-        while(i<=N) {
-            if(i < A) {
-                stack.push(i);
-                sb.append('+').append('\n');
-                i++;
-            } else if(i == A) {
-                stack.push(i);
-                sb.append('+').append('\n');
-                stack.pop();
-                sb.append('-').append('\n');
-                input.poll();
-                A = input.peek();
-                i++;
-            } else if(i > A) {
-                if(stack.pop() == A) {
-                    sb.append('-').append('\n');
-                    input.poll();
-                    A = input.peek();
-                } else {
-                    System.out.println("NO");
-                    return;
-                }
+            if(stack.get(top) == num) {
+                stack.remove(top);
+                top--;
+                sb.append("-").append("\n");
             }
         }
-
-
-        while (!input.isEmpty()) {
-            A = input.peek();
-            if(stack.pop() == A) {
-                sb.append('-').append('\n');
-                input.poll();
-            } else {
-                System.out.println("NO");
-                return;
-            }
+        if(!flag){
+            System.out.println("NO");
+        }else {
+            System.out.println(sb);
         }
-
-        System.out.println(sb);
-
     }
 }
